@@ -1,19 +1,39 @@
 import './App.css';
 import Navbar from "./components/navigation/Navbar";
-import { createTheme, ThemeProvider } from "@mui/material";
-
-const theme = createTheme({
-  typography: {
-    h6: {
-      fontFamily: ["Manrope"]
-    }
-  }
-})
+import {
+  Box, Button,
+  Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select,
+  ThemeProvider,
+  Typography
+} from "@mui/material";
+import Theme from "./components/Theme";
+import Storefront from "./components/storefront/Storefront";
+import Checkout from "./components/checkout/Checkout";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={Theme}>
       <Navbar />
+
+      <Box mt={2} mb={2}>
+        <Container maxWidth="xl">
+          <Typography variant="h3" component="h1">
+            Storefront
+          </Typography>
+
+          <Box mt={1} mb={4}>
+            <Storefront />
+          </Box>
+
+          <Typography variant="h3" component="h1">
+            Checkout
+          </Typography>
+
+          <Box mt={1}>
+            <Checkout />
+          </Box>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }
