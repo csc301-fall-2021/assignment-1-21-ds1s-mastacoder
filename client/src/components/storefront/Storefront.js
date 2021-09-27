@@ -1,12 +1,22 @@
 import { Grid } from "@mui/material";
 import ItemCard from "./cards/ItemCard";
 
-export default function Storefront() {
+export default function Storefront(props) {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <ItemCard name={"Apple iPad"} description={"Lorem ipsum"} image={"https://u.mkn.cx/misc/csc301p1/ipad.jpg"} />
-      </Grid>
+      {props.items.map((e, i) => (
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <ItemCard
+            id={i}
+            key={i}
+            name={e.name}
+            description={e.description}
+            image={e.image}
+            price={e.price}
+            addToCart={props.addToCart}
+          />
+        </Grid>
+      ))}
     </Grid>
   );
 }

@@ -10,8 +10,11 @@ import {
   Select,
   Typography
 } from "@mui/material";
+import { useState } from "react";
 
 export default function ItemCard(props) {
+  const [quantity, setQuantity] = useState(1);
+
   return (
     <Card>
       <CardMedia
@@ -21,7 +24,7 @@ export default function ItemCard(props) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {props.name}
+          <b>{props.name}</b> (${props.price})
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {props.description}
@@ -30,21 +33,27 @@ export default function ItemCard(props) {
       <CardActions>
         <Grid container spacing={0}>
           <Grid item xs={4}>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 70 }}>
               <InputLabel>Quantity</InputLabel>
               <Select
-                value={2}
-                label="Age"
+                value={quantity}
+                label="Quantity"
+                onChange={(e, v) => setQuantity(v.props.value)}
               >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
+                {[...Array(98)].map((e, i) => (
+                  <MenuItem value={i + 1} key={i + 1}>{i + 1}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={8} mt="auto" textAlign="right">
             <Box ml="auto" mr={2} mb={2}>
-              <Button size="medium" variant="contained" color="primary">
+              <Button
+                size="medium"
+                variant="contained"
+                color="primary"
+                onClick={() => props.addToCart(props.id, quantity)}
+              >
                 Add to cart
               </Button>
             </Box>
