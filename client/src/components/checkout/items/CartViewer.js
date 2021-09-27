@@ -6,7 +6,7 @@ export default function CartViewer(props) {
     if (newQuantity < oldQuantity)
       props.removeFromCart(itemId, oldQuantity - newQuantity);
     else
-      props.addToCart(itemId, oldQuantity + newQuantity);
+      props.addToCart(itemId, newQuantity - oldQuantity);
   }
 
   return (
@@ -37,7 +37,7 @@ export default function CartViewer(props) {
                     label="Quantity"
                     onChange={(_, v) => updateQuantity(e, v.props.value)}
                   >
-                    {[...Array(98)].map((e, i) => (
+                    {[...Array(99)].map((_, i) => (
                       <MenuItem value={i + 1} key={i + 1}>{i + 1}</MenuItem>
                     ))}
                   </Select>

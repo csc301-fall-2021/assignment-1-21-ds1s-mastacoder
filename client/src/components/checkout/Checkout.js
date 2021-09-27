@@ -20,7 +20,7 @@ export default function Checkout(props) {
           cartItems={props.cartItems}
         />
       </Grid>
-      <Grid item xs={12} lg={4} >
+      <Grid item xs={12} lg={4}>
         <Discounter
           setDiscount={setDiscount}
         />

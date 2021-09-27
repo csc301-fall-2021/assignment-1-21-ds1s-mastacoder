@@ -40,7 +40,7 @@ export default function ItemCard(props) {
                 label="Quantity"
                 onChange={(e, v) => setQuantity(v.props.value)}
               >
-                {[...Array(98)].map((e, i) => (
+                {[...Array(99)].map((e, i) => (
                   <MenuItem value={i + 1} key={i + 1}>{i + 1}</MenuItem>
                 ))}
               </Select>
