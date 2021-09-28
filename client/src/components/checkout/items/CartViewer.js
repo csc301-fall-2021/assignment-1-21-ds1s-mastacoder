@@ -19,7 +19,7 @@ export default function CartViewer(props) {
         )}
 
         {Object.keys(props.cartItems).map((e) => (
-          <Box py={2} borderTop={"1px solid grey"} borderBottom={"1px solid grey"}>
+          <Box py={2} borderTop={"1px solid grey"} borderBottom={"1px solid grey"} key={e}>
             <Grid container spacing={4}>
               <Grid item xs={5} m="auto">
                 <Typography variant="h5" component="div">

@@ -20,7 +20,7 @@ export default function ItemCard(props) {
       <CardMedia
         component="img"
         height="140"
-        image={props.image}
+        image={props.img_url}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -53,6 +53,7 @@ export default function ItemCard(props) {
                 variant="contained"
                 color="primary"
                 onClick={() => props.addToCart(props.id, quantity)}
+                disabled={props.cartItems[props.id] === 99}
               >
                 Add to cart
               </Button>

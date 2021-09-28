@@ -5,13 +5,13 @@ export default function Storefront(props) {
   return (
     <Grid container spacing={2}>
       {props.items.map((e, i) => (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
           <ItemCard
             id={i}
-            key={i}
             name={e.name}
             description={e.description}
-            image={e.image}
+            cartItems={props.cartItems}
+            image={e.img_url}
             price={e.price}
             addToCart={props.addToCart}
           />
