@@ -10,15 +10,13 @@ import {
 import Theme from "./components/Theme";
 import Storefront from "./components/storefront/Storefront";
 import Checkout from "./components/checkout/Checkout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getProductsInfo } from "./api/productsApi";
 
 function App() {
-  const [cartItems, setCartItems] = useState({0: 1});
-  const [storeItems] = useState([
-    { name: 'Apple iPad', price: 129.99, description: "This is an item description, ahsbahsbasdvdcd", image: "https://u.mkn.cx/misc/csc301p1/ipad.jpg"},
-    { name: 'Apple iPad 2', price: 129.99, description: "This is another ipad", image: "https://u.mkn.cx/misc/csc301p1/ipad.jpg"},
-  ]);
-
+  const [cartItems, setCartItems] = useState({});
+  const [storeItems, setStoreItems] = useState([]);
+  
   /**
    * Add <itemId> of <quantity> to cart.
    * @param itemId
@@ -27,7 +25,15 @@ function App() {
   function addToCart(itemId, quantity) {
     setCartItems(prevState => {
       let cart = { ...prevState };
-      cart[itemId] = itemId in cart ? cart[itemId] + quantity : quantity;
+      if (itemId in cart){
+        if (cart[itemId] + quantity <= 99)
+          cart[itemId] += quantity;
+        else
+          cart[itemId] = 99;
+      }
+      else{
+        cart[itemId] = quantity;
+      }
       return cart;
     })
   }
@@ -52,6 +58,18 @@ function App() {
       return cart;
     });
   }
+  
+  useEffect(() => {
+    getProductsInfo()
+      .then(res => {
+        if (res.status === 200 && res.data){
+          setStoreItems(res.data.products);
+        }
+      })
+      .catch(() => {
+        setStoreItems([]);
+      })
+  }, []);
 
   return (
     <ThemeProvider theme={Theme}>
@@ -64,6 +82,13 @@ function App() {
               Orders over $50 before taxes and after discounts come with free shipping! (Otherwise we charge a flat $5 fee for shipping)
             </Alert>
           </Box>
+          <Box mt={3} mb={2}>
+            <Alert severity="info">
+              A maximum quanitiy of 99 can be purchased for each select item.
+            </Alert>
+          </Box>
+
+          
 
           <Typography variant="h3" component="h1">
             Storefront
@@ -73,6 +98,7 @@ function App() {
             <Storefront
               items={storeItems}
               addToCart={addToCart}
+              cartItems={cartItems}
             />
           </Box>
 

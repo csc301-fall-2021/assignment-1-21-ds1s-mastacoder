@@ -1,23 +1,39 @@
 import { Alert, Box, Button, Paper, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getDiscountsInfo } from "../../../api/productsApi"
 
 export default function Discounter(props) {
   const [code, setCode] = useState("");
+  const [codes, setCodes] = useState([]);
   const [status, setStatus] = useState(0);
 
   function discountSubmit(e) {
     e.preventDefault();
-    if (code === "FIFTYOFF")
-      props.setDiscount({ discountType: "percent", amount: 0.5 });
-    else if (code === "FIVEOFF")
-      props.setDiscount({ discountType: "flat", amount: 5 });
-    else {
-        setStatus(1);
-        return;
-    }
 
-    setStatus(2);
+    let foundMatch = false;
+    codes.forEach(el => {
+      if (el.discount_code === code){
+        props.setDiscount({ discountType: el.reduction_type, amount: el.amount_off});
+        foundMatch = true;
+        setStatus(2);
+        return;
+      }
+    });
+
+    if (!foundMatch) setStatus(1);
   }
+
+  useEffect(() => {
+    getDiscountsInfo()
+      .then(res => {
+        if (res.status === 200 && res.data){
+          setCodes(res.data.discounts);
+        }
+      })
+      .catch(() => {
+        setCodes([])
+      });
+  }, []);
 
   return (
     <Paper elevation={2}>

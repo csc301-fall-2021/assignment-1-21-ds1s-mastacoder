@@ -8,7 +8,7 @@ export default function Calculator(props) {
   useEffect(() => {
     let calculatedSubtotal = 0;
     let calculatedDiscount = 0;
-    Object.keys(props.cartItems).map((e) => {
+    Object.keys(props.cartItems).forEach((e) => {
       calculatedSubtotal += props.storeItems[e].price * props.cartItems[e];
     });
 
@@ -21,7 +21,7 @@ export default function Calculator(props) {
 
     setSubtotal(calculatedSubtotal - calculatedDiscount);
     setDiscount(calculatedDiscount);
-  }, [props.cartItems, props.discount]);
+  }, [props.cartItems, props.discount, props.storeItems]);
 
   return (
     <Paper elevation={2}>

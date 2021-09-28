@@ -7,30 +7,21 @@ class NameOrUid(str, Enum):
     UID = "id"
 
 class ReductionType(str, Enum):
-    CASHOFF = "CO"
-    PERCENTOFF = "PO"
-
-class ProductType(str, Enum):
-    FRUIT = "FR"
-    MEAT = "ME"
-    VEGATABLES = "VEG"
-    BAKERY = "BA"
+    CASHOFF = "flat"
+    PERCENTOFF = "percent"
 
 
 class DiscountModel(BaseModel):
     discount_code: str
-    apply_on_types: List[ProductType]
     reduction_type: ReductionType
     amount_off: float
 
 class ProductResponseModel(BaseModel):
     id: int
-    product_name: str
-    type: ProductType
+    name: str
     description: str
     price: float
     img_url: str
-    quanity: int
 
 class ProductsResponseModel(BaseModel):
     products: List[ProductResponseModel]

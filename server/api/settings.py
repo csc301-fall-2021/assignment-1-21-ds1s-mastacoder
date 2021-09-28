@@ -8,11 +8,12 @@ class Settings(BaseSettings):
     IMAGE_SERVER_BASE_URL = Field(default="https://u.mkn.cx/misc/csc301p1/", env="IMAGE_SERVER_BASE_URL")
 
     # CORS related settings
-    CORS_ALLOWED_ORIGINS: List[str] = Field(default=[""], env="CORS_ALLOWED_ORIGINS")
+    CORS_ALLOWED_ORIGINS: List[str] = Field(default=["*"], env="CORS_ALLOWED_ORIGINS")
     ALLOWED_METHODS: List[str] = Field(default=["*"], env="ALLOWED_METHODS")
     ALLOWED_HEADERS: List[str] = Field(default=["*"], env="ALLOWED_HEADERS")
 
     PROJECT_NAME: str = Field(default="A1 Assignment", env="PROJECT_NAME")
+    PORT: str = Field(default="8080", env="PORT")
 
 
 settings = Settings()
