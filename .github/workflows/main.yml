@@ -16,18 +16,10 @@ jobs:
         with:
           python-version: 3.9
       
-      - name: pytester-cov
-        uses: alexanderdamiani/pytester-cov@v1.2.1
+      - name: fast-pytest
+        uses: paolorechia/fast-pytest-github-action@v1.0
         with:
-          # root directory to recursively search for .py files
-          pytest-root-dir: server
-          # directory with pytest tests. if left empty will identify test(s) dir by default
-          pytest-tests-dir: server/api/tests
-          # list of directories and/or files to ignore
-          cov-omit-list: "client,server/api/tests*"
-          # requirements filepath for project
-          requirements-file: server/requirements/requirements.txt
-          # fail if any single file coverage is less than threshold
-          cov-threshold-single: 0
-          # fail if the total coverage is less than threshold
-          cov-threshold-total: 0
+          # Args passed to pytest, provided as string
+          pytest_args: .
+          # Requirements file to install test dependencies
+          requirements_file: server/requirements/requirements.txt 
