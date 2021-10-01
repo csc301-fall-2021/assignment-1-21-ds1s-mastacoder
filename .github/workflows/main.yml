@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      
+      - name: pytester-cov
+        uses: alexanderdamiani/pytester-cov@v1.2.1
+        with:
+          # root directory to recursively search for .py files
+          pytest-root-dir: server
+          # directory with pytest tests. if left empty will identify test(s) dir by default
+          pytest-tests-dir: server/api/tests
+          # list of directories and/or files to ignore
+          cov-omit-list: "client"
+          # requirements filepath for project
+          requirements-file: server/requirements/requirements.txt
+          # fail if any single file coverage is less than threshold
+          cov-threshold-single: 0
+          # fail if the total coverage is less than threshold
+          cov-threshold-total: 0
