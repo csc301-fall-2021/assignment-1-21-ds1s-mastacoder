@@ -43,7 +43,7 @@ jobs:
           path: server/deployments/.env.staging
       
       - run: |
-          if ["$ENVIRONMENT" == "staging"]; then
+          if [ "$ENVIRONMENT" == "staging" ]; then
             exit 0
           fi
           exit 1
@@ -71,7 +71,7 @@ jobs:
           path: server/deployments/.env.production
           
       - run: |
-          if ["$ENVIRONMENT" == "production"]; then
+          if [ "$ENVIRONMENT" == "production" ]; then
             exit 0
           fi
           exit 1
