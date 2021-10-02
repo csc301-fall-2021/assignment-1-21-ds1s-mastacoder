@@ -6,114 +6,114 @@ on:
 
 
 jobs:
-  backend-unit-tests:
-    runs-on: ubuntu-latest
-    env:
-      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
-      PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
-    steps:
-      - uses: actions/checkout@v2
+#   backend-unit-tests:
+#     runs-on: ubuntu-latest
+#     env:
+#       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+#       PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+#       - name: Set up Python 3.9
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.9
       
-      # Perform unit tests on test suit for backend
-      - name: test-fastapi-unit-tests
-        timeout-minutes: 1
-        run: |
-          cd server
-          pip install -r requirements/requirements.txt -r requirements/dev-requirements.txt
-          sh run-tests.sh
-          EXIT_CODE=$?
-          if ["$EXIT_CODE" -neq 0]; then
-            echo "Tests failed ❌!"
-            exit 1
-          else
-            cd ..
-            echo "Tests Passed ✅!"
-            exit 0
-          fi
+#       # Perform unit tests on test suit for backend
+#       - name: test-fastapi-unit-tests
+#         timeout-minutes: 1
+#         run: |
+#           cd server
+#           pip install -r requirements/requirements.txt -r requirements/dev-requirements.txt
+#           sh run-tests.sh
+#           EXIT_CODE=$?
+#           if ["$EXIT_CODE" -neq 0]; then
+#             echo "Tests failed ❌!"
+#             exit 1
+#           else
+#             cd ..
+#             echo "Tests Passed ✅!"
+#             exit 0
+#           fi
                
-  deploy-backend-staging:
-    needs: backend-unit-tests
-    runs-on: ubuntu-latest
-    env:
-      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
-    steps:
-      - uses: actions/checkout@v2
+#   deploy-backend-staging:
+#     needs: backend-unit-tests
+#     runs-on: ubuntu-latest
+#     env:
+#       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Deploy a1-fast-api-staging
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: "a1-fastapi-staging"
-          buildpack: https://github.com/heroku/heroku-buildpack-python
-          appdir: server
-          healthcheck: ${{env.STAGING_URL}}/health
-          checkstring: '{"I am up and running":":)"}'
-          delay: 5
-          rollbackonhealthcheckfailed: yes
-          env_file: deployments/.env.staging
+#       - name: Deploy a1-fast-api-staging
+#         uses: AkhileshNS/heroku-deploy@v3.12.12
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           heroku_app_name: "a1-fastapi-staging"
+#           buildpack: https://github.com/heroku/heroku-buildpack-python
+#           appdir: server
+#           healthcheck: ${{env.STAGING_URL}}/health
+#           checkstring: '{"I am up and running":":)"}'
+#           delay: 5
+#           rollbackonhealthcheckfailed: yes
+#           env_file: deployments/.env.staging
           
-      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺"
+#       - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺"
                      
-  deploy-backend-production:
-    needs: functional-tests
-    runs-on: ubuntu-latest
-    env:
-        PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
-    steps:  
-      - uses: actions/checkout@v2
+#   deploy-backend-production:
+#     needs: functional-tests
+#     runs-on: ubuntu-latest
+#     env:
+#         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
+#     steps:  
+#       - uses: actions/checkout@v2
             
-      - name: Deploy a1-fast-api-staging
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: "a1-fastapi-production"
-          buildpack: https://github.com/heroku/heroku-buildpack-python
-          appdir: server
-          healthcheck: ${{env.PRODUCTION_URL}}/health
-          checkstring: '{"I am up and running":":)"}'
-          delay: 5
-          rollbackonhealthcheckfailed: yes
-          env_file: deployments/.env.production
+#       - name: Deploy a1-fast-api-staging
+#         uses: AkhileshNS/heroku-deploy@v3.12.12
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           heroku_app_name: "a1-fastapi-production"
+#           buildpack: https://github.com/heroku/heroku-buildpack-python
+#           appdir: server
+#           healthcheck: ${{env.PRODUCTION_URL}}/health
+#           checkstring: '{"I am up and running":":)"}'
+#           delay: 5
+#           rollbackonhealthcheckfailed: yes
+#           env_file: deployments/.env.production
           
-      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Production! 🥳🎉🍺"
+#       - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Production! 🥳🎉🍺"
 
-  deploy-frontend-staging:
-    needs: deploy-backend-staging
-    runs-on: ubuntu-latest
-    env:
-      STAGING_URL: https://a1-storefront-staging.herokuapp.com
-    steps:
-      - uses: actions/checkout@v2
+#   deploy-frontend-staging:
+#     needs: deploy-backend-staging
+#     runs-on: ubuntu-latest
+#     env:
+#       STAGING_URL: https://a1-storefront-staging.herokuapp.com
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Deploy a1-storefront-staging
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: "a1-storefront-staging"
-          procfile: "web: npm start"
-          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
-          appdir: client
-          healthcheck: ${{env.STAGING_URL}}/
-          delay: 30
-          rollbackonhealthcheckfailed: yes
-          env_file: .env.staging
+#       - name: Deploy a1-storefront-staging
+#         uses: AkhileshNS/heroku-deploy@v3.12.12
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           heroku_app_name: "a1-storefront-staging"
+#           procfile: "web: npm start"
+#           buildpack: https://github.com/heroku/heroku-buildpack-nodejs
+#           appdir: client
+#           healthcheck: ${{env.STAGING_URL}}/
+#           delay: 30
+#           rollbackonhealthcheckfailed: yes
+#           env_file: .env.staging
           
-      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Staging! 🥳🎉🍺"
+#       - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Staging! 🥳🎉🍺"
     
           
   functional-tests:
-    needs: deploy-frontend-staging
+#     needs: deploy-frontend-staging
     runs-on: ubuntu-latest
     env:
-      STAGING_URL: https://a1-storefront-staging.herokuapp.com
+      CLIENT_WEBSITE_INDEX_URL: https://a1-storefront-staging.herokuapp.com
     steps:
       - uses: actions/checkout@v2
 
@@ -131,7 +131,6 @@ jobs:
         run: |
           cd client_frontend_tests
           echo "CLIENT_WEBSITE_INDEX_URL=$STAGING_URL" >> $GITHUB_ENV
-          echo $CLIENT_WEBSITE_INDEX_URL
           pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
@@ -143,29 +142,29 @@ jobs:
 
       
           
-  deploy-frontend-production:
-    needs: deploy-backend-production
-    runs-on: ubuntu-latest
-    env:
-      PRODUCTION_URL: https://a1-storefront-production.herokuapp.com
-    steps:
-      - uses: actions/checkout@v2
+#   deploy-frontend-production:
+#     needs: deploy-backend-production
+#     runs-on: ubuntu-latest
+#     env:
+#       PRODUCTION_URL: https://a1-storefront-production.herokuapp.com
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Deploy a1-storefront-production
-        uses: AkhileshNS/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
-          heroku_app_name: "a1-storefront-production"
-          procfile: "web: npm start"
-          appdir: client
-          healthcheck: ${{env.PRODUCTION_URL}}/
-          delay: 30
-          rollbackonhealthcheckfailed: yes
-          env_file: .env.production
+#       - name: Deploy a1-storefront-production
+#         uses: AkhileshNS/heroku-deploy@v3.12.12
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           buildpack: https://github.com/heroku/heroku-buildpack-nodejs
+#           heroku_app_name: "a1-storefront-production"
+#           procfile: "web: npm start"
+#           appdir: client
+#           healthcheck: ${{env.PRODUCTION_URL}}/
+#           delay: 30
+#           rollbackonhealthcheckfailed: yes
+#           env_file: .env.production
           
-      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Production! 🥳🎉🍺"
+#       - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Production! 🥳🎉🍺"
     
       
           
