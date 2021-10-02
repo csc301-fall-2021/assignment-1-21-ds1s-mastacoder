@@ -22,7 +22,7 @@ jobs:
         timeout-minutes: 1
         uses: paolorechia/fast-pytest-github-action@v1.0
         with:
-          pytest_args: --cov-config=.coveragerc --cov=server/api --cov-fail-under=75 server/api/tests/
+          pytest_args: --cov-config=server/.coveragerc --cov=server/api --cov-fail-under=75 server/api/tests/
           requirements_file: server/requirements/requirements.txt 
     
           
