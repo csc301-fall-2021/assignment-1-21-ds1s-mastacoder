@@ -1,4 +1,4 @@
-name: CI
+name: Deployment
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
       
@@ -16,10 +17,15 @@ jobs:
         with:
           python-version: 3.9
       
+      # Perform unit test cases on test suit
       - name: fast-pytest
+        timeout-minutes: 1
         uses: paolorechia/fast-pytest-github-action@v1.0
         with:
-          # Args passed to pytest, provided as string
-          pytest_args: .
-          # Requirements file to install test dependencies
+          pytest_args: --cov-config=.coveragerc --cov=server/api --cov-fail-under=75 server/api/tests/
           requirements_file: server/requirements/requirements.txt 
+    
+          
+      
+    
+          
