@@ -8,6 +8,9 @@ on:
 jobs:
   deploy-fastapi:
     runs-on: ubuntu-latest
+    env:
+      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+      PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
     steps:
       - uses: actions/checkout@v2
       
@@ -22,7 +25,7 @@ jobs:
         run: |
           cd server
           pip install -r requirements/requirements.txt -r requirements/dev-requirements.txt
-          pytest --cov-config=.coveragerc --cov=api  api/tests/
+          sh run-tests.sh
           EXIT_CODE=$?
           if ["$EXIT_CODE" -neq 0]; then
             echo "Tests failed ❌!"
@@ -32,6 +35,15 @@ jobs:
             echo "Tests Passed ✅!"
             exit 0
           fi
+      
+      # Load in staging env
+      - name: Dotenv Action
+        uses: falti/dotenv-action@v0.2.7
+        with:
+          path: server/deployments/.env.staging
+      
+      - run: |
+          [$ENVIRONMENT == "staging"] &&
           
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
@@ -42,7 +54,37 @@ jobs:
           heroku_app_name: "a1-fastapi-staging"
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
-          env_file: deployments/.env.staging
+          
+      # Make Health check to staging environment
+      - name: Site Health Check
+        uses: pchalupa/site-health-check@v1.0.2
+        with:
+          url: ${{env.STAGING_URL}}/health
+          
+      # Load in production env
+      - name: Dotenv Action
+        uses: falti/dotenv-action@v0.2.7
+        with:
+          path: server/deployments/.env.production
+          
+      - run: |
+          [$ENVIRONMENT == "production"] &&
+          
+      - name: Heroku pipelines promoting
+        uses: NikitaGlukhi/heroku-pipelines-promoting@v2
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: "a1-fastapi-staging"
+          heroku_promote_to_app: "a1-fastapi-production"
+          
+    # Make Health check to production environment
+      - name: Site Health Check
+        uses: pchalupa/site-health-check@v1.0.2
+        with:
+          url: ${{env.PRODUCTION_URL}}/health
+          
+      
           
 #   deploy-react:
 #     runs-on: ubuntu-latest
