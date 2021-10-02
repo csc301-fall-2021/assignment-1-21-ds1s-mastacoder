@@ -58,7 +58,7 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.staging
           
-      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺
+      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺"
                      
   deploy-backend-production:
     needs: functional-tests
@@ -82,7 +82,7 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.production
           
-      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Production! 🥳🎉🍺
+      - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Production! 🥳🎉🍺"
 
   deploy-frontend-staging:
     needs: deploy-backend-staging
@@ -106,7 +106,7 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: .env.staging
           
-      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Staging! 🥳🎉🍺
+      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Staging! 🥳🎉🍺"
     
           
   functional-tests:
@@ -160,7 +160,7 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: .env.production
           
-      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Production! 🥳🎉🍺
+      - run: echo "🍺🎉🥳 Frontend Deployment Successfully Released to Production! 🥳🎉🍺"
     
       
           
