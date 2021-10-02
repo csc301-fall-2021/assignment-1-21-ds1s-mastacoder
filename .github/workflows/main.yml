@@ -94,6 +94,9 @@ jobs:
         with:
           path: server/deployments/.env.staging
           
+      - run: |
+          echo "Makes heroku step work" > dummy.txt
+          
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
         uses: CDNievas/heroku-action@v1.0
@@ -101,7 +104,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-fastapi-staging"
-          dynamicFiles: 0
+          dynamicFiles: False
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
           
