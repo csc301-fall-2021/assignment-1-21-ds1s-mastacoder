@@ -120,7 +120,7 @@ jobs:
           procfile: "web: npm start"
           appdir: client
           healthcheck: ${{env.PRODUCTION_URL}}/
-          delay: 5
+          delay: 30
           rollbackonhealthcheckfailed: yes
           env_file: .env.production
       
