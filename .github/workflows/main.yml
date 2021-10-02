@@ -121,6 +121,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+          
+      - run: sleep 10s
 
       - name: Export web url environment variable
         run: export CLIENT_WEBSITE_INDEX_URL=${{env.STAGING_URL}}
