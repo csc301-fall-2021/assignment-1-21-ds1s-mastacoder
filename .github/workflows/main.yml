@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  perform-unit-tests:
+  backend-unit-tests:
     runs-on: ubuntu-latest
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
@@ -37,14 +37,13 @@ jobs:
           fi
                
   deploy-backend-staging:
-    needs: perform-unit-tests
+    needs: backend-unit-tests
     runs-on: ubuntu-latest
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
     steps:
       - uses: actions/checkout@v2
       
-          
       - name: Deploy a1-fast-api-staging
         uses: AkhileshNS/heroku-deploy@v3.12.12
         with:
@@ -57,8 +56,7 @@ jobs:
           delay: 5
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.staging
-
-           
+                     
   deploy-backend-production:
     needs: deploy-backend-staging
     runs-on: ubuntu-latest
@@ -66,13 +64,7 @@ jobs:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
     steps:  
       - uses: actions/checkout@v2
-      
-      # Load in production env
-      - name: Dotenv Action
-        uses: falti/dotenv-action@v0.2.7
-        with:
-          path: server/deployments/.env.production
-          
+            
       - name: Deploy a1-fast-api-staging
         uses: AkhileshNS/heroku-deploy@v3.12.12
         with:
@@ -85,4 +77,47 @@ jobs:
           delay: 5
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.production
+          
+  deploy-frontend-staging:
+    needs: deploy-backend-staging
+    runs-on: ubuntu-latest
+    env:
+      STAGING_URL: https://a1-storefront-staging.herokuapp.com
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Deploy a1-storefront-staging
+        uses: AkhileshNS/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: "a1-storefront-staging"
+          procfile: "web: npm start"
+          appdir: client/src
+          healthcheck: ${{env.STAGING_URL}}/
+          delay: 5
+          rollbackonhealthcheckfailed: yes
+          env_file: .env.staging
+          
+  deploy-frontend-production:
+    needs: deploy-backend-production
+    runs-on: ubuntu-latest
+    env:
+      PRODUCTION_URL: https://a1-storefront-production.herokuapp.com
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Deploy a1-storefront-production
+        uses: AkhileshNS/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: "a1-storefront-production"
+          procfile: "web: npm start"
+          appdir: client/src
+          healthcheck: ${{env.PRODUCTION_URL}}/
+          delay: 5
+          rollbackonhealthcheckfailed: yes
+          env_file: .env.production
+      
           
