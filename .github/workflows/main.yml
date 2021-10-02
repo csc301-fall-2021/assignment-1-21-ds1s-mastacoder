@@ -11,10 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
       
       # Perform unit tests on test suit for backend
       - name: test-fastapi-unit-tests
@@ -42,10 +42,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
       
       # Load in staging env
       - name: Dotenv Action
@@ -85,10 +85,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
       
       # Load in production env
       - name: Dotenv Action
