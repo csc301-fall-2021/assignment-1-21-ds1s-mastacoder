@@ -8,6 +8,9 @@ on:
 jobs:
   perform-unit-tests:
     runs-on: ubuntu-latest
+    env:
+      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+      PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
     steps:
       - uses: actions/checkout@v2
       
@@ -32,19 +35,8 @@ jobs:
             echo "Tests Passed ✅!"
             exit 0
           fi
-     
           
-  deploy-staging:
-    needs: perform-unit-tests
-    runs-on: ubuntu-latest
-    env:
-      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
-    steps:
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      
+          
       # Load in staging env
       - name: Dotenv Action
         uses: falti/dotenv-action@v0.2.7
@@ -61,31 +53,12 @@ jobs:
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
           
-          
-  staging-health-check:
-    needs: deploy-staging
-    runs-on: ubuntu-latest
-    env:
-      STAGING_URL: https://a1-fastapi-staging.herokuapp.com
-    steps:
       # Make Health check to staging environment
       - name: Site Health Check
         uses: pchalupa/site-health-check@v1.0.2
         with:
           url: ${{env.STAGING_URL}}/health
-    
           
-  deploy-production:
-    needs: staging-health-check
-    runs-on: ubuntu-latest
-    env:
-        PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
-    steps:  
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      
       # Load in production env
       - name: Dotenv Action
         uses: falti/dotenv-action@v0.2.7
@@ -100,17 +73,90 @@ jobs:
           heroku_app_name: "a1-fastapi-staging"
           heroku_promote_to_app: "a1-fastapi-production"
           
-  production-health-check:
-    needs: deploy-production
-    runs-on: ubuntu-latest
-    env:
-        PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
-    steps:
       # Make Health check to production environment
       - name: Site Health Check
         uses: pchalupa/site-health-check@v1.0.2
         with:
           url: ${{env.PRODUCTION_URL}}/health
+     
+          
+#   deploy-staging:
+#     needs: perform-unit-tests
+#     runs-on: ubuntu-latest
+#     env:
+#       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+#     steps:
+#       - name: Set up Python 3.9
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.9
+      
+#       # Load in staging env
+#       - name: Dotenv Action
+#         uses: falti/dotenv-action@v0.2.7
+#         with:
+#           path: server/deployments/.env.staging
+          
+#       - name: deploy-fastapi-staging-heroku
+#         timeout-minutes: 1
+#         uses: CDNievas/heroku-action@v1.0
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           heroku_app_name: "a1-fastapi-staging"
+#           appdir: server
+#           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
+          
+          
+#   staging-health-check:
+#     needs: deploy-staging
+#     runs-on: ubuntu-latest
+#     env:
+#       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
+#     steps:
+#       # Make Health check to staging environment
+#       - name: Site Health Check
+#         uses: pchalupa/site-health-check@v1.0.2
+#         with:
+#           url: ${{env.STAGING_URL}}/health
+    
+          
+#   deploy-production:
+#     needs: staging-health-check
+#     runs-on: ubuntu-latest
+#     env:
+#         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
+#     steps:  
+#       - name: Set up Python 3.9
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.9
+      
+#       # Load in production env
+#       - name: Dotenv Action
+#         uses: falti/dotenv-action@v0.2.7
+#         with:
+#           path: server/deployments/.env.production
+          
+#       - name: Heroku pipelines promoting
+#         uses: NikitaGlukhi/heroku-pipelines-promoting@v2
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+#           heroku_app_name: "a1-fastapi-staging"
+#           heroku_promote_to_app: "a1-fastapi-production"
+          
+#   production-health-check:
+#     needs: deploy-production
+#     runs-on: ubuntu-latest
+#     env:
+#         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
+#     steps:
+#       # Make Health check to production environment
+#       - name: Site Health Check
+#         uses: pchalupa/site-health-check@v1.0.2
+#         with:
+#           url: ${{env.PRODUCTION_URL}}/health
 
 
 
