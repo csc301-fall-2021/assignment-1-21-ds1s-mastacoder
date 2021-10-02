@@ -131,6 +131,7 @@ jobs:
         run: |
           cd client_frontend_tests
           echo "CLIENT_WEBSITE_INDEX_URL=$STAGING_URL" >> $GITHUB_ENV
+          echo $CLIENT_WEBSITE_INDEX_URL
           pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
