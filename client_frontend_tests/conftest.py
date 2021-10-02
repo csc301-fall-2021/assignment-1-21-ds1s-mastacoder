@@ -19,8 +19,8 @@ def selenium_client(website_index_url):
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--headless")
     chrome_driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-
     chrome_driver.get(website_index_url)
+    time.sleep(5.0)
     chrome_driver.maximize_window()
     yield chrome_driver
     chrome_driver.quit()
