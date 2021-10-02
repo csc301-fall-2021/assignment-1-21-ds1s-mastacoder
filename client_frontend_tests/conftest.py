@@ -3,7 +3,7 @@ import os
 import pytest
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -14,10 +14,10 @@ def website_index_url():
 
 @pytest.fixture
 def selenium_client(website_index_url):
-    options = Options()
-    options.addArguments("--no-sandbox")
-    options.addArguments("--disable-dev-shm-usage")
-    options.addArguments("--headless")
+    options = ChromeOptions()
+    options.addArgument("--no-sandbox")
+    options.addArgument("--disable-dev-shm-usage")
+    options.addArgument("--headless")
     chrome_driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     chrome_driver.get(website_index_url)
