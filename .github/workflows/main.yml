@@ -53,7 +53,7 @@ jobs:
           heroku_app_name: "a1-fastapi-staging"
           appdir: server
           healthcheck: ${{env.STAGING_URL}}/health
-          checkstring: '{"I am up and running": ":)"}'
+          checkstring: '{"I am up and running":":)"}'
           delay: 5
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.staging
