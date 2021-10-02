@@ -23,9 +23,6 @@ from api.products.pseudo_db import (
 from api.settings import settings
 
 class TestProductsInfoService:
-    def test_service_get_all_products_not_same_as_collection(self):
-        assert ProductsResponseModel(products=products) != get_all_products()
-
     def test_service_get_all_products_adds_img_base_url(self):
         response: ProductsResponseModel = get_all_products()
         for product in response.products:

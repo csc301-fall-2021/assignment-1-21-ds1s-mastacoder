@@ -1,5 +1,4 @@
 import pytest
-from fastapi import requests
 from starlette.responses import Response
 from api.products.models import (
     ReductionType,
