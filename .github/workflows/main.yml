@@ -62,6 +62,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-fastapi-staging"
           appdir: server
+          useforce: true
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
           
           
