@@ -42,7 +42,7 @@ jobs:
           heroku_app_name: "a1-fastapi-staging"
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
-          env_file: deployment/.env.staging
+          env_file: deployments/.env.staging
           
 #   deploy-react:
 #     runs-on: ubuntu-latest
