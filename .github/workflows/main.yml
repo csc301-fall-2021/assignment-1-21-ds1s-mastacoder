@@ -130,6 +130,7 @@ jobs:
       - name: Run pytest on selenium test cases
         run: |
           cd client_frontend_tests
+          echo "CLIENT_WEBSITE_INDEX_URL=$STAGING_URL" >> $GITHUB_ENV
           pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
@@ -138,8 +139,6 @@ jobs:
           fi
           echo "✅✅✅Tests Passed ✅✅✅!"
           exit 0
-        env:
-          CLIENT_WEBSITE_INDEX_URL=${{env.STAGING_URL}}
 
       
           
