@@ -44,8 +44,10 @@ jobs:
       
       - run: |
           if [ "$ENVIRONMENT" == "staging" ]; then
+            echo $ENVIRONMENT
             exit 0
           fi
+          echo $ENVIRONMENT
           exit 1
           
       - name: deploy-fastapi-staging-heroku
