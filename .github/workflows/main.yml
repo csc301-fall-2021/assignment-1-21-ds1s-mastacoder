@@ -47,9 +47,12 @@ jobs:
         with:
           python-version: 3.8
       
-
+      # Load in staging env
+      - name: Dotenv Action
+        uses: falti/dotenv-action@v0.2.7
+        with:
+          path: server/deployments/.env.staging
           
-                  
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
         uses: CDNievas/heroku-action@v1.0
@@ -58,7 +61,6 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-fastapi-staging"
           appdir: server
-          dynamicFiles: false
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
           
           
