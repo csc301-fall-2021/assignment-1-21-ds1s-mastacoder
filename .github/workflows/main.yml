@@ -61,7 +61,6 @@ jobs:
           dynamicFiles: ''
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
-          env_file: deployments/.env.staging
           
           
   staging-health-check:
