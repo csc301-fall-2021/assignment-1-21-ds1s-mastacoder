@@ -49,7 +49,7 @@ jobs:
         with:
           node-version: 16
           
-      - run: npm install -g dotenv
+      - run: npm install -i dotenv
           
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
