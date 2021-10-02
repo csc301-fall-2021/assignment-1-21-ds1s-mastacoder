@@ -50,6 +50,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-fastapi-staging"
+          buildpack: https://github.com/heroku/heroku-buildpack-python
           appdir: server
           healthcheck: ${{env.STAGING_URL}}/health
           checkstring: '{"I am up and running":":)"}'
@@ -71,6 +72,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-fastapi-production"
+          buildpack: https://github.com/heroku/heroku-buildpack-python
           appdir: server
           healthcheck: ${{env.PRODUCTION_URL}}/health
           checkstring: '{"I am up and running":":)"}'
@@ -93,6 +95,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: "a1-storefront-staging"
           procfile: "web: npm start"
+          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
           appdir: client
           healthcheck: ${{env.STAGING_URL}}/
           delay: 5
@@ -112,6 +115,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
           heroku_app_name: "a1-storefront-production"
           procfile: "web: npm start"
           appdir: client
