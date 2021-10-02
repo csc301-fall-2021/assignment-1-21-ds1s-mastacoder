@@ -47,11 +47,7 @@ jobs:
         with:
           python-version: 3.8
       
-      # Load in staging env
-      - name: Dotenv Action
-        uses: falti/dotenv-action@v0.2.7
-        with:
-          path: server/deployments/.env.staging
+
           
                   
       - name: deploy-fastapi-staging-heroku
