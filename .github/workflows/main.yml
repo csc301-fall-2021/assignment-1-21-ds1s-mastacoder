@@ -42,6 +42,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      
       # Load in staging env
       - name: Dotenv Action
         uses: falti/dotenv-action@v0.2.7
@@ -74,12 +79,17 @@ jobs:
     
           
   deploy-production:
-    needs: deploy-staging
+    needs: staging-health-check
     runs-on: ubuntu-latest
     env:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
       
       # Load in production env
       - name: Dotenv Action
@@ -96,7 +106,7 @@ jobs:
           heroku_promote_to_app: "a1-fastapi-production"
           
   production-health-check:
-    needs: deploy-staging
+    needs: deploy-production
     runs-on: ubuntu-latest
     env:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
