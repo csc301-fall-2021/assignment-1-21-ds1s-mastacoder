@@ -22,7 +22,7 @@ jobs:
         timeout-minutes: 1
         run: |
           cd server
-          pip install -r requirements/requirements.txt -r requirements/dev-requirements.txt
+          pip install -r requirements/local-requirements.txt -r requirements/dev-requirements.txt
           pytest --cov-config=.coveragerc --cov=api  api/tests/
           EXIT_CODE=$?
           if ["$EXIT_CODE" -neq 0]; then
