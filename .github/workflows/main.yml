@@ -43,7 +43,10 @@ jobs:
           path: server/deployments/.env.staging
       
       - run: |
-          [$ENVIRONMENT == "staging"]; &&
+          if [$ENVIRONMENT == "staging"]; then
+            exit 0
+          fi
+          exit 1
           
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
@@ -68,7 +71,10 @@ jobs:
           path: server/deployments/.env.production
           
       - run: |
-          [$ENVIRONMENT == "production"]; &&
+          if [$ENVIRONMENT == "production"]; then
+            exit 0
+          fi
+          exit 1
           
       - name: Heroku pipelines promoting
         uses: NikitaGlukhi/heroku-pipelines-promoting@v2
