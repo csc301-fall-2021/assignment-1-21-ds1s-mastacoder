@@ -32,6 +32,7 @@ jobs:
             cd ..
             echo "Tests Passed ✅!"
             exit 0
+          fi
           
           
           
