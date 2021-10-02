@@ -6,8 +6,20 @@
 #
 attrs==21.2.0
     # via pytest
+certifi==2021.5.30
+    # via requests
+charset-normalizer==2.0.6
+    # via requests
+colorama==0.4.4
+    # via crayons
+configparser==5.0.2
+    # via webdriver-manager
 coverage==5.5
     # via pytest-cov
+crayons==0.4.0
+    # via webdriver-manager
+idna==3.2
+    # via requests
 iniconfig==1.1.1
     # via pytest
 packaging==21.0
@@ -24,6 +36,8 @@ pytest==6.2.5
     #   pytest-cov
 pytest-cov==2.12.1
     # via -r requirements/requirements.in
+requests==2.26.0
+    # via webdriver-manager
 selenium==3.141.0
     # via -r requirements/requirements.in
 toml==0.10.2
@@ -31,4 +45,8 @@ toml==0.10.2
     #   pytest
     #   pytest-cov
 urllib3==1.26.7
-    # via selenium
+    # via
+    #   requests
+    #   selenium
+webdriver-manager==3.4.2
+    # via -r requirements/requirements.in
