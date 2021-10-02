@@ -57,6 +57,9 @@ jobs:
           delay: 5
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.staging
+          
+      - run: |
+         echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺
                      
   deploy-backend-production:
     needs: deploy-frontend-staging
@@ -80,6 +83,9 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: deployments/.env.production
           
+      - run: |
+         echo "🍺🎉🥳 Backend Deployment Successfully Released to Production! 🥳🎉🍺
+
   deploy-frontend-staging:
     needs: deploy-backend-staging
     runs-on: ubuntu-latest
@@ -102,6 +108,39 @@ jobs:
           rollbackonhealthcheckfailed: yes
           env_file: .env.staging
           
+      - run: |
+         echo "🍺🎉🥳 Frontend Deployment Successfully Released to Staging! 🥳🎉🍺
+    
+          
+  functional-tests:
+    needs: deploy-frontend-staging
+    runs-on: ubuntu-latest
+    env:
+      STAGING_URL: https://a1-storefront-staging.herokuapp.com
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Export web url environment variable
+        run: export CLIENT_WEBSITE_INDEX_URL=${{env.STAGING_URL}}
+
+      - name: Run pytest on selenium test cases
+        run: |
+          cd client_frontend_tests
+          pytest .
+          if [ $? -neq 0 ]; then
+            echo "❌❌❌Functional tests failed, look at detailed logs for more information❌❌❌!"
+            exit 1
+          fi
+          echo "✅✅✅Tests Passed ✅✅✅!"
+          exit 0
+
+      
+          
   deploy-frontend-production:
     needs: deploy-backend-production
     runs-on: ubuntu-latest
@@ -123,5 +162,9 @@ jobs:
           delay: 30
           rollbackonhealthcheckfailed: yes
           env_file: .env.production
+          
+      - run: |
+          echo "🍺🎉🥳 Frontend Deployment Successfully Released to Production! 🥳🎉🍺
+    
       
           
