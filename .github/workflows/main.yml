@@ -86,10 +86,7 @@ jobs:
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
     steps:
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+      - uses: actions/checkout@v2
       
       # Load in staging env
       - name: Dotenv Action
@@ -115,6 +112,7 @@ jobs:
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
     steps:
+    
       # Make Health check to staging environment
       - name: Site Health Check
         uses: pchalupa/site-health-check@v1.0.2
@@ -128,10 +126,7 @@ jobs:
     env:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
     steps:  
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+      - uses: actions/checkout@v2
       
       # Load in production env
       - name: Dotenv Action
@@ -158,16 +153,3 @@ jobs:
         uses: pchalupa/site-health-check@v1.0.2
         with:
           url: ${{env.PRODUCTION_URL}}/health
-
-
-
-
-          
-          
-          
-      
-          
-          
-      
-    
-          
