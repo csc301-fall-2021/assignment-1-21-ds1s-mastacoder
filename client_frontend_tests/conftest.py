@@ -15,9 +15,9 @@ def website_index_url():
 @pytest.fixture
 def selenium_client(website_index_url):
     options = ChromeOptions()
-    options.addArgument("--no-sandbox")
-    options.addArgument("--disable-dev-shm-usage")
-    options.addArgument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")
     chrome_driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     chrome_driver.get(website_index_url)
