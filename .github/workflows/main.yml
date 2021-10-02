@@ -18,13 +18,25 @@ jobs:
           python-version: 3.9
       
       # Perform unit test cases on test suit
-      - name: fast-pytest
+      - name: test-fastapi-unit-tests
         timeout-minutes: 1
-        uses: paolorechia/fast-pytest-github-action@v1.0
-        with:
-          pytest_args: --cov-config=server/.coveragerc --cov=server/api --cov-fail-under=75 server/api/tests/
-          requirements_file: server/requirements/requirements.txt 
-    
+        run: |
+          cd server
+          pytest --cov-config=.coveragerc --cov=api  api/tests/
+          EXIT_CODE=$?
+          if ["$EXIT_CODE" -neq 0]; then
+            echo "Tests failed ❌!"
+            exit 1
+          else
+            cd ..
+            echo "Tests Passed ✅!"
+            exit 0
+          
+          
+          
+          
+      
+          
           
       
     
