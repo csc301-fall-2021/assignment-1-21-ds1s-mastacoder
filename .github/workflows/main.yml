@@ -48,11 +48,8 @@ jobs:
         uses: actions/setup-node@v2.4.1
         with:
           node-version: 16
-          cache: npm
           
-      - name: Install dot-env
-        run: |
-          npm install -g dot-env
+      - run: npm install -g dotenv
           
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
