@@ -128,6 +128,7 @@ jobs:
       - name: Run pytest on selenium test cases
         run: |
           cd client_frontend_tests
+          pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
             echo "❌❌❌Functional tests failed, look at detailed logs for more information❌❌❌!"
