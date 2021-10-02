@@ -20,6 +20,8 @@ idna==3.2
     # via requests
 pydantic==1.8.2
     # via fastapi
+python-dotenv==0.19.0
+    # via -r requirements/requirements.in
 requests==2.26.0
     # via -r requirements/requirements.in
 starlette==0.14.2
