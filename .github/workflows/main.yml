@@ -125,7 +125,7 @@ jobs:
       - name: Run pytest on selenium test cases
         run: |
           cd client_frontend_tests
-          CLIENT_WEBSITE_INDEX_URL=https://a1-storefront-staging.herokuapp.com
+          "CLIENT_WEBSITE_INDEX_URL=https://a1-storefront-staging.herokuapp.com"
           pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
