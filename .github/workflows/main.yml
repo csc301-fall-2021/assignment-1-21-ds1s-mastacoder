@@ -131,7 +131,6 @@ jobs:
         run: |
           cd client_frontend_tests
           pip install -r requirements/requirements.txt
-          CLIENT_WEBSITE_INDEX_URL=$STAGING_URL
           pytest .
           if [ $? -neq 0 ]; then
             echo "❌❌❌Functional tests failed, look at detailed logs for more information❌❌❌!"
@@ -139,6 +138,8 @@ jobs:
           fi
           echo "✅✅✅Tests Passed ✅✅✅!"
           exit 0
+        env:
+          CLIENT_WEBSITE_INDEX_URL=${{env.STAGING_URL}}
 
       
           
