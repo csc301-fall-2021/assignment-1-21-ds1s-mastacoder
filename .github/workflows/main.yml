@@ -6,9 +6,8 @@ on:
 
 
 jobs:
-  build:
+  test-scan:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v2
       
@@ -32,11 +31,13 @@ jobs:
             cd ..
             echo "Tests Passed ✅!"
             exit 0
-          fi
+          fi 
           
-      - name: expose-staging-env-vars
-        run: . server/deployments/.env.staging
-          
+  deploy-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+
       - name: deploy-fastapi-staging-heroku
         timeout-minutes: 1
         uses: CDNievas/heroku-action@v1.0
@@ -47,6 +48,12 @@ jobs:
           appdir: server
           buildpacks: '["https://github.com/heroku/heroku-buildpack-python"]'
           
+#   deploy-production:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2 
+
+
           
           
           
