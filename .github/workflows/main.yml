@@ -36,7 +36,7 @@ jobs:
             exit 0
           fi
                
-  deploy-staging:
+  deploy-backend-staging:
     needs: perform-unit-tests
     runs-on: ubuntu-latest
     env:
@@ -59,8 +59,8 @@ jobs:
           env_file: deployments/.env.staging
 
            
-  deploy-production:
-    needs: deploy-staging
+  deploy-backend-production:
+    needs: deploy-backend-staging
     runs-on: ubuntu-latest
     env:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
@@ -73,22 +73,16 @@ jobs:
         with:
           path: server/deployments/.env.production
           
-      - name: Heroku pipelines promoting
-        uses: NikitaGlukhi/heroku-pipelines-promoting@v2
+      - name: Deploy a1-fast-api-staging
+        uses: AkhileshNS/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: "a1-fastapi-staging"
-          heroku_promote_to_app: "a1-fastapi-production"
+          heroku_app_name: "a1-fastapi-production"
+          appdir: server
+          healthcheck: ${{env.PRODUCTION_URL}}/health
+          checkstring: '{"I am up and running":":)"}'
+          delay: 5
+          rollbackonhealthcheckfailed: yes
+          env_file: deployments/.env.production
           
-  production-health-check:
-    needs: deploy-production
-    runs-on: ubuntu-latest
-    env:
-        PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
-    steps:
-      # Make Health check to production environment
-      - name: Site Health Check
-        uses: pchalupa/site-health-check@v1.0.2
-        with:
-          url: ${{env.PRODUCTION_URL}}/health
