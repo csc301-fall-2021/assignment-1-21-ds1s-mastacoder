@@ -62,7 +62,7 @@ jobs:
          echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺
                      
   deploy-backend-production:
-    needs: deploy-frontend-staging
+    needs: functional-tests
     runs-on: ubuntu-latest
     env:
         PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
