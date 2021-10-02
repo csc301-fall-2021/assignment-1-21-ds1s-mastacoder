@@ -114,10 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLIENT_WEBSITE_INDEX_URL: https://a1-storefront-staging.herokuapp.com
-    steps:
-      - name: Start selenoid
-        uses: Xotabu4/selenoid-github-action@v2
-    
+    steps:    
       - uses: actions/checkout@v2
 
       - name: Set up Python 3.9
@@ -131,7 +128,7 @@ jobs:
         run: |
           cd client_frontend_tests
           chmod +x InstallChrome.sh
-          sh InstallChrome.sh
+          sh InstallChrome.sh > /dev/null
           CLIENT_WEBSITE_INDEX_URL=${CLIENT_WEBSITE_INDEX_URL}
           pip install -r requirements/requirements.txt
           pytest .
