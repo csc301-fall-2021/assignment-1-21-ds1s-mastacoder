@@ -8,8 +8,8 @@ from api.settings import settings
 app = FastAPI(title=settings.PROJECT_NAME)
 
 
-app.include_router(health_router)
-app.include_router(product_router, prefix="/products")
+app.include_router(health_router, tags=["Health"])
+app.include_router(product_router, tags=["Products & Discounts"], prefix="/products")
 
 
 app.add_middleware(
