@@ -110,10 +110,10 @@ jobs:
     
           
   functional-tests:
-#     needs: deploy-frontend-staging
+#   needs: deploy-frontend-staging
     runs-on: ubuntu-latest
     env:
-      CLIENT_WEBSITE_INDEX_URL=https://a1-storefront-staging.herokuapp.com
+      CLIENT_WEBSITE_INDEX_URL: https://a1-storefront-staging.herokuapp.com
     steps:
       - uses: actions/checkout@v2
 
