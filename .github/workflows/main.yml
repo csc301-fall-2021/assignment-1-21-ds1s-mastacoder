@@ -102,7 +102,7 @@ jobs:
           buildpack: https://github.com/heroku/heroku-buildpack-nodejs
           appdir: client
           healthcheck: ${{env.STAGING_URL}}/
-          delay: 5
+          delay: 30
           rollbackonhealthcheckfailed: yes
           env_file: .env.staging
           
