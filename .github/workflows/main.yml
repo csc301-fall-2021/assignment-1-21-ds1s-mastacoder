@@ -112,6 +112,8 @@ jobs:
   functional-tests:
 #     needs: deploy-frontend-staging
     runs-on: ubuntu-latest
+    env:
+      CLIENT_WEBSITE_INDEX_URL=https://a1-storefront-staging.herokuapp.com
     steps:
       - uses: actions/checkout@v2
 
@@ -125,7 +127,7 @@ jobs:
       - name: Run pytest on selenium test cases
         run: |
           cd client_frontend_tests
-          "CLIENT_WEBSITE_INDEX_URL=https://a1-storefront-staging.herokuapp.com"
+          "CLIENT_WEBSITE_INDEX_URL=$CLIENT_WEBSITE_INDEX_URL"
           pip install -r requirements/requirements.txt
           pytest .
           if [ $? -neq 0 ]; then
