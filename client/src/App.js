@@ -84,11 +84,9 @@ function App() {
           </Box>
           <Box mt={3} mb={2}>
             <Alert severity="info">
-              A maximum quanitiy of 99 can be purchased for each select item.
+              Due to COVID-19 related shipping restrictions, a maximum quantity of 99 can be purchased for each select item.
             </Alert>
           </Box>
-
-          
 
           <Typography variant="h3" component="h1">
             Storefront

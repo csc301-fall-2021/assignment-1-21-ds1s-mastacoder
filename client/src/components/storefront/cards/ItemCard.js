@@ -20,7 +20,7 @@ export default function ItemCard(props) {
       <CardMedia
         component="img"
         height="140"
-        image={props.img_url}
+        image={props.image}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
