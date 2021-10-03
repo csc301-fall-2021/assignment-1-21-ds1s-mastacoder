@@ -1,4 +1,5 @@
 env/
 *.pyc
-client/.idea
+.idea
 .pytest_cache
+client/.env

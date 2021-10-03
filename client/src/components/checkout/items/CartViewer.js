@@ -43,9 +43,9 @@ export default function CartViewer(props) {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={4} m="auto">
+              <Grid item xs={4} m="auto" textAlign="right">
                 <Button
-                  size="large"
+                  size="small"
                   variant="contained"
                   color="primary"
                   onClick={() => props.removeFromCart(e, -1)}
