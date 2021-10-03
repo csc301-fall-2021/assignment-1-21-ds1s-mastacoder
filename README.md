@@ -62,7 +62,7 @@ There are two types of discount codes declared in the backend to use:
       yarn start
       ~~~~
     
-## Instructions to run tests locally (IF REQUIRED)
+## Instructions to Run Tests Locally (IF REQUIRED)
 
 If the last part is followed by setting up environments only minimal additions must be added.
 
