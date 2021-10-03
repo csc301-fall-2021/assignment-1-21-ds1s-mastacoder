@@ -13,9 +13,9 @@ There are 4 seperate deployments that can be accessed:
 
 &nbsp;&nbsp;&nbsp;&nbsp;FastAPI-production:  https://a1-fastapi-production.herokuapp.com/docs
 
-&nbsp;&nbsp;&nbsp;&nbsp;storefront-staging:  https://a1-storefront-staging.herokuapp.com/docs
+&nbsp;&nbsp;&nbsp;&nbsp;storefront-staging:  https://a1-storefront-staging.herokuapp.com/
 
-&nbsp;&nbsp;&nbsp;&nbsp;storefront-production: https://a1-storefront-production.herokuapp.com/docs
+&nbsp;&nbsp;&nbsp;&nbsp;storefront-production: https://a1-storefront-production.herokuapp.com/
 
 The fastapi routes can be tested on each environment with the openAPI playground independent to the backend code. 
 This can be used to validate what we are passing back from the backend as well look at our model schemas for data without
