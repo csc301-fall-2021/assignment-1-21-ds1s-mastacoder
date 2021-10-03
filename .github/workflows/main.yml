@@ -9,6 +9,7 @@ on:
 jobs:
   backend-unit-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
       PRODUCTION_URL: https://a1-fastapi-production.herokuapp.com
@@ -22,7 +23,6 @@ jobs:
       
       # Perform unit tests on test suit for backend
       - name: test-fastapi-unit-tests
-        timeout-minutes: 1
         run: |
           cd server
           pip install -r requirements/requirements.txt -r requirements/dev-requirements.txt
@@ -40,6 +40,7 @@ jobs:
   deploy-backend-staging:
     needs: backend-unit-tests
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     env:
       STAGING_URL: https://a1-fastapi-staging.herokuapp.com
     steps:
@@ -62,6 +63,7 @@ jobs:
       - run: echo "🍺🎉🥳 Backend Deployment Successfully Released to Staging! 🥳🎉🍺"
                      
   deploy-backend-production:
+    timeout-minutes: 2
     needs: functional-tests
     runs-on: ubuntu-latest
     env:
@@ -88,6 +90,7 @@ jobs:
   deploy-frontend-staging:
     needs: deploy-backend-staging
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     env:
       STAGING_URL: https://a1-storefront-staging.herokuapp.com
     steps:
@@ -113,6 +116,7 @@ jobs:
   functional-tests:
     needs: deploy-frontend-staging
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     env:
       CLIENT_WEBSITE_INDEX_URL: https://a1-storefront-staging.herokuapp.com
     steps:    
@@ -143,6 +147,7 @@ jobs:
   deploy-frontend-production:
     needs: deploy-backend-production
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     env:
       PRODUCTION_URL: https://a1-storefront-production.herokuapp.com
     steps:
