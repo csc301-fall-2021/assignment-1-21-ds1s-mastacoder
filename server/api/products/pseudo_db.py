@@ -11,49 +11,49 @@ products = [
     ProductResponseModel(
         id=1, 
         name="Avacado",
-        description="Succulent meat mmm yea",
+        description="An avacoda that is super good",
         price=10.14,
         img_url="img1.jpg"
     ), 
     ProductResponseModel(
         id=2, 
         name="Apple",
-        description="Succulent meat mmm yea",
+        description="Apples from florida",
         price=10.12,
         img_url="img2.jpg"
     ), 
     ProductResponseModel(
         id=3, 
         name="Pear",
-        description="Succulent meat mmm yea",
+        description="An ordinary Pear",
         price=10.11,
         img_url="img3.jpg"
     ),
     ProductResponseModel(
         id=4, 
         name="Mushroom",
-        description="Succulent meat mmm yea",
+        description="Mushrooms locally picked",
         price=23.22,
         img_url="img4.jpg"
     ),
     ProductResponseModel(
         id=5, 
         name="Chicken",
-        description="Succulent meat mmm yea",
+        description="Chicken Breast",
         price=43.41,
         img_url="img5.jpg"
     ),
     ProductResponseModel(
         id=6, 
         name="Strawberries",
-        description="Succulent meat mmm yea",
+        description="Locally farmed strawberries",
         price=10.51,
         img_url="img6.jpg"
     ),
     ProductResponseModel(
         id=7, 
         name="Watermelon",
-        description="Succulent meat mmm yea",
+        description="Really big watermelons",
         price=4.51,
         img_url="img7.jpg"
     ),
